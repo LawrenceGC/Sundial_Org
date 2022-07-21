@@ -33,7 +33,7 @@ jobs:
     # Authenticate DevHub
     - name: Authenticate and set default DevHub
       run: |
-        echo "$JWT_SIGNING_KEY" > server.key
+        echo "${{ secrets.JWT_SIGNING_KEY }}" > server.key
         sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile server.key --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
       shell: bash
     
