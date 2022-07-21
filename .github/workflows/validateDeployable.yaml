@@ -15,8 +15,8 @@ on:
 
 env:
   JWT_SIGNING_KEY:  ${{ secrets.JWT_SIGNING_KEY }}
-  CONSUMER_KEY:     ${{ secrets.ISV_DEV_HUB_CONSUMER_KEY }}
-  DEV_HUB_USERNAME: ${{ secrets.ISV_DEV_HUB_USERNAME }}
+  CONSUMER_KEY:     ${{ secrets.CONSUMER_KEY }}
+  DEV_HUB_USERNAME: ${{ secrets.DEV_HUB_USERNAME }}
 
 jobs:
 
@@ -46,7 +46,7 @@ jobs:
     # Authenticate DevHub
     - name: Authenticate and set default DevHub
       run: |
-        sfdx force:auth:jwt:grant --clientid "$CONSUMER_KEY" --jwtkeyfile "server.key" --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
+        sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile server.key --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
       shell: bash
 
     - name: Create scratch org
