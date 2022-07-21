@@ -1,0 +1,52 @@
+# Validates a feature branch is deployable prior to merging into main
+# Carries out the following in parallel:
+# 1. Run all Jest tests
+# 2. Create a scratch org WITHOUT package namespace, deploy and run all apex tests
+# 3. Create scratch orgs WITH package namespace, deploy and run all apex tests
+
+name: Validate Branch is Deployable
+
+# Run only on demand or on PRs to main
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+env:
+  JWT_SIGNING_KEY:  ${{ secrets.JWT_SIGNING_KEY }}
+  CONSUMER_KEY:     ${{ secrets.CONSUMER_KEY }}
+  DEV_HUB_USERNAME: ${{ secrets.DEV_HUB_USERNAME }}
+  TEST_USERNAME:    ${{ secrets.TEST_USERNAME }}
+
+jobs:
+
+  deploy-and-test-without-namespace:
+    name: Deploy to fresh scratch org
+    runs-on: ubuntu-latest
+    container: salesforce/salesforcedx:latest-full
+    steps:
+
+    # Checkout branch so we have source code in working directory
+    - name: 'Checkout source code'
+      uses: actions/checkout@v2
+
+    - name: Output key
+      run: |
+        echo "${{ secrets.JWT_SIGNING_KEY }}" > server.key
+        ls
+      shell: bash
+
+    - name: Show files
+      run: |
+        ls
+      shell: bash
+
+    - name: Authenticate to TEST
+      run: |
+        sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile server.key -r https://test.salesforce.com --username $TEST_USERNAME -a "testOrg"
+
+    # RunLocalTests is the default for production but included here just in case
+    - name: Deploy Metadata and Run Tests
+      run: |
+        sfdx force:source:deploy -u testOrg -p force-app/main/default -l RunLocalTests --checkonly
