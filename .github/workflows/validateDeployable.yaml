@@ -46,7 +46,7 @@ jobs:
     # Authenticate DevHub
     - name: Authenticate and set default DevHub
       run: |
-        sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile server.key --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
+        sfdx force:auth:jwt:grant --clientid "$CONSUMER_KEY" --jwtkeyfile "server.key" --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
       shell: bash
 
     - name: Create scratch org
