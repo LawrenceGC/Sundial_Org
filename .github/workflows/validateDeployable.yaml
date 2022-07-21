@@ -31,12 +31,24 @@ jobs:
       uses: actions/checkout@v2
 
     # Authenticate DevHub
-    - name: Authenticate and set default DevHub
+    - name: Output key
       run: |
         echo "${{ secrets.JWT_SIGNING_KEY }}" > server.key
+        ls
+      shell: bash
+
+    # Authenticate DevHub
+    - name: Show files
+      run: |
+        ls
+      shell: bash
+
+    # Authenticate DevHub
+    - name: Authenticate and set default DevHub
+      run: |
         sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile server.key --username $DEV_HUB_USERNAME --setdefaultdevhubusername -a devhub
       shell: bash
-    
+
     - name: Create scratch org
       run: |
         sfdx force:org:create -f config/project-scratch-def.json --setdefaultusername -d 1
