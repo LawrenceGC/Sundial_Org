@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Worst_Food__c</fullName>
+    <externalId>false</externalId>
+    <label>Worst Food</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Haggis</fullName>
+                <default>false</default>
+                <label>Haggis</label>
+            </value>
+            <value>
+                <fullName>Taramasalata</fullName>
+                <default>false</default>
+                <label>Taramasalata</label>
+            </value>
+            <value>
+                <fullName>Jellied eels</fullName>
+                <default>false</default>
+                <label>Jellied eels</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
