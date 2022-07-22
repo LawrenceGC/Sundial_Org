@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - main
+      - TEST
 
 env:
   JWT_SIGNING_KEY:  ${{ secrets.JWT_SIGNING_KEY }}
@@ -22,7 +22,7 @@ env:
 jobs:
 
   deploy-and-test-without-namespace:
-    name: Deploy to fresh scratch org
+    name: Validate check-only deployment to TEST
     runs-on: ubuntu-latest
     container: salesforce/salesforcedx:latest-full
     steps:
